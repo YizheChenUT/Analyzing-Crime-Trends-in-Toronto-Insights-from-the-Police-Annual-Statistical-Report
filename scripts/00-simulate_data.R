@@ -11,7 +11,6 @@
 #### Workspace setup ####
 library(tidyverse)
 
-
 #### Simulate data ####
 set.seed(304) #Setting seed to ensure reproducibility
 
@@ -29,5 +28,4 @@ simulated_crime_data <- simulate_crime_data()
 
 ##Save crime data
 write.csv(simulated_crime_data, "data/raw_data/simulated_reported_crimes.csv", row.names = FALSE)
-
 
