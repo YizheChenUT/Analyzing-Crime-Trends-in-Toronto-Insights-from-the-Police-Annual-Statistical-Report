@@ -9,7 +9,7 @@
 
 
 #### Workspace setup ####
-library(tidyverse)..
+library(tidyverse)...
 # [...UPDATE THIS...]
 
 #### Simulate data ####
