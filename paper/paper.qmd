@@ -80,7 +80,7 @@ crime_trends_plot %>%
 
 ```
 
-According to @fig-Crimes_by_Year，There was a sharp increase in crimes against property in 2023, reaching the highest number of incidents reported during the 2014-2023 period, with over 100,000 incidents. Crimes against the person maintained a relatively stable trend from 2014 to 2023, consistently reporting between 20,000 and 25,000 incidents annually. Traffic-related criminal code violations showed a decline from 2018, especially during 2020, where the number of reported incidents dropped below 15,000. Other categories, including "Controlled Drugs and Substances Act" and "Other Federal Statute Violations", remained consistently low over the years, each with less than 5,000 incidents reported annually.
+According to @fig-Crimes_by_Year, There was a sharp increase in crimes against property in 2023, reaching the highest number of incidents reported during the 2014-2023 period, with over 100,000 incidents. Crimes against the person maintained a relatively stable trend from 2014 to 2023, consistently reporting between 20,000 and 25,000 incidents annually. Traffic-related criminal code violations showed a decline from 2018, especially during 2020, where the number of reported incidents dropped below 15,000. Other categories, including "Controlled Drugs and Substances Act" and "Other Federal Statute Violations", remained consistently low over the years, each with less than 5,000 incidents reported annually.
 
 ## Crime Types by Division
 Different divisions across Toronto report varying types of crimes. Divisions located in more urbanized areas, show higher concentrations of property crimes, such as auto theft and break-ins. At the same time, suburban areas report a higher frequency of violent crimes.
@@ -117,6 +117,11 @@ crime_by_division_plot %>%
  # theme_minimal()  # Minimal theme for clean visuals
 
 ```
+Based on @fig-Crimes_by_Div, 32 Division reports high rates of auto theft than other divisions. 12 Division and 53 Division show large number reports in break-ins and residential thefts, especially in apartment.
+
+## Clearance Rates
+
+
 
 \newpage
 
