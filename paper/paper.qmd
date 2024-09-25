@@ -9,6 +9,7 @@ date-format: long
 abstract: "This paper analyzes crime trends in Toronto using the Police Annual Statistical Report from 2014 to 2023. Data from Open Data Toronto is used to evaluate crime distributions across different categories and regions. Analysis reveals that some areas, particularly in divisions such as D13 and D32, report the highest number of property-related crimes like auto theft. Suburban areas also illustrate rising trends in specific crime subtypes. These findings can help optimize policing strategies and public safety resource allocations."
 format: pdf
 number-sections: true
+toc: true
 bibliography: references.bib
 ---
 
