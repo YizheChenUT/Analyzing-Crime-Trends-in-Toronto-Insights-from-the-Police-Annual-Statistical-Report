@@ -113,18 +113,66 @@ crime_by_division_plot %>%
     y = "Division",
     x = "Total Incidents",
     fill = "Crime Type"
-  ) #+
- # theme_minimal()  # Minimal theme for clean visuals
+  ) +
+  theme_minimal()  # Minimal theme for clean visuals
 
 ```
 Based on @fig-Crimes_by_Div, 32 Division reports high rates of auto theft than other divisions. 12 Division and 53 Division show large number reports in break-ins and residential thefts, especially in apartment.
 
 ## Clearance Rates
+Clearance rates, which reflect the number of resolved cases, vary widely between divisions. Many divisions report low clearance rates for property crimes, particularly auto theft, which remains a challenge for law enforcement.
 
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
 
+## Calculate clearance rate for each crime type and division
+clearance_rate_plot <- analysis_data %>%
+  filter(incidents_reported > 0) %>%  # Ensure calculating clearance rate where incidents were reported
+  mutate(clearance_rate = incidents_cleared / incidents_reported) %>%  # Calculate the clearance rate
+  group_by(crime_subtype, division_name) %>%
+  summarise(avg_clearance_rate = mean(clearance_rate, na.rm = TRUE))  # Average clearance rate for each crime type and division
+```
+
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-Clearance_Rate
+#| fig-cap: Clearance Rate by Crime Type
+
+## Create a grouped bar chart to show clearance rate by crime type and division
+clearance_rate_plot %>%
+  ggplot(aes(y = reorder(division_name, -avg_clearance_rate), x = avg_clearance_rate, fill = crime_subtype)) +
+  geom_bar(stat = "identity", position = "dodge", width = 0.7) +  # Grouped bar chart for clearance rates
+  labs(
+    title = "Clearance Rate by Crime Type and Division in Toronto",
+    y = "Division",
+    x = "Average Clearance Rate",
+    fill = "Crime Type"
+  ) +
+  scale_x_continuous(labels = scales::percent_format(accuracy = 1)) +  # Convert y-axis to percentage
+  theme_minimal()  # Minimal theme for clean visuals
+
+```
+As illustrated by @fig-Clearance_Rate, the overall clearance rate for property crimes remains low, with less than 10% of auto theft cases being resolved in most divisions. Crimes against persons, such as assault and sexual violations, generally have relatively high clearance rates, particularly in suburban areas.
+
+# Discussion
+The results of this analysis show clear trends in crime patterns across Toronto. Downtown areas  are significantly affected by property crimes like auto theft and break-ins, driven by dense population and high economic activity. Suburban areas, however, report more violent crimes, which may be influenced by socio-economic factors such as income inequality and access to social services.
+
+The data also highlights the gap between reported incidents and the number of cleared cases. Low clearance rates for property crimes, particularly auto theft, suggest the need for more effective crime prevention measures. Increasing surveillance and expanding the capacity of law enforcement agencies in high-crime areas may help address this issue.
+
+Further research into socio-economic factors driving these trends is necessary. For example, regions with higher rates of poverty and unemployment may experience more violent crimes. Additionally, strategies like community policing and public engagement in high-risk areas may prove effective in reducing crime rates and improving clearance rates.
+
+# Conclusion
+This paper analyzed crime trends in Toronto using the Police Annual Statistical Report from 2014 to 2023. The findings demonstrate significant varieties in crime distribution across Toronto’s police divisions, with property crimes being more concentrated in downtown areas and violent crimes more prevalent in suburban regions. These insights are critical for shaping future crime prevention policies and ensuring the effective allocation of related resources.
+
+Further research should explore the socio-economic factors influencing these trends, including whether community engagement can help lower crime rates in high-risk areas.
 
 \newpage
-
 
 # References
 
