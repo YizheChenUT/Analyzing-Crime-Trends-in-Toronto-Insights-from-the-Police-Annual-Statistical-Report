@@ -27,7 +27,7 @@ Crime and public safety are critical concerns for urban environments like Toront
 
 Our analysis covers from 2014 to 2023 and focuses on two main crime categories: Crimes Against Property and Crimes Against the Person. We explore how incidents vary by division and examine clearance rates (resolved cases) to evaluate the effectiveness of law enforcement strategies. By highlighting regional crime trends, this paper provides insights into public safety concerns that can shape future policies.
 
-# Data {#sec-data}
+# Data
 The data used in this analysis was obtained from the Open Data Toronto portal [@OpenDataDataset]. The data set includes reported incidents categorized by type, division, and year, covering the period from 2014 to 2023. 
 
 ## Reported Crimes Dataset
@@ -39,7 +39,7 @@ The dataset includes multiple fields related to crime, such as:
 **Incidents Cleared**: The number of resolved cases.
 
 ## Data Cleaning and Transformation
-The data was cleaned by removing duplicates and correcting data entry errors. Special attention was given to divisions with high and low crime rates, as well as to the clearance rate, which reflects how effectively crimes were resolved by the law enforcement.
+The data was cleaned by removing duplicates and correcting data entry errors[@citeR] [@tidyverse] [@janitor]. Special attention was given to divisions with high and low crime rates, as well as to the clearance rate, which reflects how effectively crimes were resolved by the law enforcement.
 
 # Results
 ## Crime Distribution by Year
@@ -66,6 +66,8 @@ crime_trends_plot <- analysis_data %>%
 #| fig-cap: Crimes Reported by Year
 
 ## Create a line chart showing crimes reported by year and crime category
+## Citation: https://allisonhorst.github.io/palmerpenguins/
+## Citation: https://ggplot2.tidyverse.org
 crime_trends_plot %>%
   ggplot(aes(x = year, y = total_incidents, color = crime_category, group = crime_category)) +
   geom_line(size = 1) +  # Line plot for crime trends
@@ -105,6 +107,8 @@ crime_by_division_plot <- analysis_data %>%
 #| fig-cap: Crimes by Division and Crime Type
 
 ## Create a bar chart comparing crime types and incidents by division
+## Citation: https://allisonhorst.github.io/palmerpenguins/
+## Citation: https://ggplot2.tidyverse.org
 crime_by_division_plot %>% 
   ggplot(aes(y = reorder(division_name, -total_incidents), x = total_incidents, fill = crime_subtype)) +
   geom_bar(stat = "identity", position = "dodge") +  # Using a bar chart for comparison
@@ -145,6 +149,8 @@ clearance_rate_plot <- analysis_data %>%
 #| fig-cap: Clearance Rate by Crime Type
 
 ## Create a grouped bar chart to show clearance rate by crime type and division
+## Citation: https://allisonhorst.github.io/palmerpenguins/
+## Citation: https://ggplot2.tidyverse.org
 clearance_rate_plot %>%
   ggplot(aes(y = reorder(division_name, -avg_clearance_rate), x = avg_clearance_rate, fill = crime_subtype)) +
   geom_bar(stat = "identity", position = "dodge", width = 0.7) +  # Grouped bar chart for clearance rates
@@ -161,7 +167,7 @@ clearance_rate_plot %>%
 As illustrated by @fig-Clearance_Rate, the overall clearance rate for property crimes remains low, with less than 10% of auto theft cases being resolved in most divisions. Crimes against persons, such as assault and sexual violations, generally have relatively high clearance rates, particularly in suburban areas.
 
 # Discussion
-The results of this analysis show clear trends in crime patterns across Toronto. Downtown areas  are significantly affected by property crimes like auto theft and break-ins, driven by dense population and high economic activity. Suburban areas, however, report more violent crimes, which may be influenced by socio-economic factors such as income inequality and access to social services.
+The results of this analysis show clear trends in crime patterns across Toronto. Downtown areas  are significantly affected by property crimes like auto theft and break-ins, driven by dense population and high economic activity. Suburban areas, however, report more violent crimes, which may be influenced by socio-economic factors such as income inequality and access to social services [@Mohammadi_Bergquist].
 
 The data also highlights the gap between reported incidents and the number of cleared cases. Low clearance rates for property crimes, particularly auto theft, suggest the need for more effective crime prevention measures. Increasing surveillance and expanding the capacity of law enforcement agencies in high-crime areas may help address this issue.
 
