@@ -3,7 +3,7 @@ title: "Analyzing Crime Trends in Toronto: Insights from the Police Annual Stati
 # subtitle:
 author: 
   - Yizhe Chen
-thanks: "Code and data are available at: https://github.com/YizheChenUT/STA304TermPaper1.git"
+thanks: "Code and data are available at: https://github.com/YizheChenUT/Analyzing-Crime-Trends-in-Toronto-Insights-from-the-Police-Annual-Statistical-Report.git"
 date: today
 date-format: long
 abstract: "This paper analyzes crime trends in Toronto using the Police Annual Statistical Report from 2014 to 2023. Data from Open Data Toronto is used to evaluate crime distributions across different categories and regions. Analysis reveals that some areas, particularly in divisions such as D13 and D32, report the highest number of property-related crimes like auto theft. Suburban areas also illustrate rising trends in specific crime subtypes. These findings can help optimize policing strategies and public safety resource allocations."
@@ -32,7 +32,7 @@ Our analysis covers from 2014 to 2023 and focuses on two main crime categories: 
 The remainder of this paper is structured as follows: @sec-data presents the data and the steps taken to clean and transform it for analysis. @sec-result discusses the results of the study, focusing on crime distribution trends by year, types of crimes by division, and clearance rates for different crime types. @sec-discussion interprets the findings in the broader context of urban crime trends and offers insights for future research. Finally, @sec-conclusion concludes the paper by summarizing key takeaways and recommending strategies for crime prevention and law enforcement improvement in Toronto.
 
 # Data {#sec-data}
-The data used in this analysis was obtained from the Open Data Toronto portal [@OpenDataDataset]. The data set includes reported incidents categorized by type, division, and year across Toronto, covering the period from 2014 to 2023. The data collection is a key resource for tracking public safety, and its availability promotes transparency in policing efforts. However, the dataset also raises ethical concerns, particularly around data privacy. Although anonymized, the geospatial breakdown could still enable the identification of patterns in specific communities, potentially stigmatizing certain areas.
+The data used in this analysis was obtained from the Open Data Toronto portal [@OpenDataDataset]. Data was cleaned and analyzed using the language R [@citeR]. The data set includes reported incidents categorized by type, division, and year across Toronto, covering the period from 2014 to 2023. The data collection is a key resource for tracking public safety, and its availability promotes transparency in policing efforts. However, the dataset also raises ethical concerns, particularly around data privacy. Although anonymized, the geospatial breakdown could still enable the identification of patterns in specific communities, potentially stigmatizing certain areas.
 
 ## Reported Crimes Dataset
 The dataset includes multiple fields related to crime, such as:  
@@ -217,6 +217,8 @@ crime_by_division_plot <- analysis_data %>%
 #| message: false
 #| label: fig-Crimes_by_Div
 #| fig-cap: Crimes by Division and Crime Type
+#| fig-width: 10
+#| fig-height: 8
 
 ## Create a bar chart comparing crime types and incidents by division
 ## Citation: https://allisonhorst.github.io/palmerpenguins/
@@ -230,7 +232,13 @@ crime_by_division_plot %>%
     x = "Total Incidents",
     fill = "Crime Type"
   ) +
-  theme_minimal()  # Minimal theme for clean visuals
+  theme_minimal() + # Minimal theme for clean visuals
+  theme(
+    axis.text.y = element_text(size = 8, margin = margin(r = 10)), # Add the spacing of y-axis
+    plot.title = element_text(hjust = 0.5), # Placing title on the middle
+    legend.position = "bottom"  # Placing legend on the bottom
+  ) +
+  guides(fill = guide_legend(ncol = 2))  # Making the legend 2 columns
 
 ```
 Based on @fig-Crimes_by_Div, 32 Division reports high rates of auto theft than other divisions. 12 Division and 53 Division show large number reports in break-ins and residential thefts, especially in apartment.
@@ -259,6 +267,8 @@ clearance_rate_plot <- analysis_data %>%
 #| message: false
 #| label: fig-Clearance_Rate
 #| fig-cap: Clearance Rate by Crime Type
+#| fig-width: 10
+#| fig-height: 8
 
 ## Create a grouped bar chart to show clearance rate by crime type and division
 ## Citation: https://allisonhorst.github.io/palmerpenguins/
@@ -273,7 +283,14 @@ clearance_rate_plot %>%
     fill = "Crime Type"
   ) +
   scale_x_continuous(labels = scales::percent_format(accuracy = 1)) +  # Convert y-axis to percentage
-  theme_minimal()  # Minimal theme for clean visuals
+  theme_minimal() +  # Minimal theme for clean visuals
+  theme(
+    axis.text.y = element_text(size = 12, margin = margin(r = 10)), # Add the spacing of y-axis
+    plot.title = element_text(hjust = 0.5), # Placing title on the middle
+    legend.position = "bottom"  # Placing legend on the bottom
+  ) +
+  guides(fill = guide_legend(ncol = 2))  # Making the legend 2 columns
+
 
 ```
 As illustrated by @fig-Clearance_Rate, the overall clearance rate for property crimes remains low, with less than 10% of auto theft cases being resolved in most divisions. Crimes against persons, such as assault and sexual violations, generally have relatively high clearance rates, particularly in suburban areas.
