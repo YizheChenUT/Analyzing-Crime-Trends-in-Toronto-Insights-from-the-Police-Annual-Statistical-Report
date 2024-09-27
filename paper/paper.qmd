@@ -72,7 +72,7 @@ crime_by_division <- crime_data %>%
 #| fig-cap: Total Crimes across Different Divisions
 
 ## Plot crime trends by division
-crime_by_division %>% 
+crime_by_division %>%
   ggplot(aes(x = year, y = total_crimes, color = division_name)) +
   geom_line(size = 1) +
   labs(
@@ -81,7 +81,7 @@ crime_by_division %>%
     y = "Total Incidents",
     color = "Division"
   ) +
-  theme_minimal()# Minimal theme for clean visuals
+  theme_minimal() # Minimal theme for clean visuals
 ```
 
 ## Broader Context and Ethical Considerations
@@ -113,8 +113,8 @@ crime_by_year <- crime_data %>%
 #| fig-cap: Total Crimes by Year
 
 ## Plot crime trends by year
-crime_by_year %>% 
-ggplot(aes(x = year, y = total_crimes)) +
+crime_by_year %>%
+  ggplot(aes(x = year, y = total_crimes)) +
   geom_line(size = 1, color = "blue") +
   labs(
     title = "Crimes Reported by Year (2014-2023)",
@@ -170,7 +170,7 @@ The dataset reveals fluctuating crime rates between 2014 and 2023. Property crim
 analysis_data <- read_csv(here::here("data/analysis_data/analysis_data.csv")) # Load the cleaned analysis data
 crime_trends_plot <- analysis_data %>%
   group_by(year, crime_category) %>%
-  summarise(total_incidents = sum(incidents_reported, na.rm = TRUE))  # Summing incidents per year and crime category
+  summarise(total_incidents = sum(incidents_reported, na.rm = TRUE)) # Summing incidents per year and crime category
 ```
 
 ```{r}
@@ -186,16 +186,15 @@ crime_trends_plot <- analysis_data %>%
 ## Citation: https://ggplot2.tidyverse.org
 crime_trends_plot %>%
   ggplot(aes(x = year, y = total_incidents, color = crime_category, group = crime_category)) +
-  geom_line(size = 1) +  # Line plot for crime trends
-  geom_point(size = 2) +  # Adding points to lines
+  geom_line(size = 1) + # Line plot for crime trends
+  geom_point(size = 2) + # Adding points to lines
   labs(
     title = "Crimes Reported by Year in Toronto (2014-2023)",
     x = "Year",
     y = "Total Incidents Reported",
     color = "Crime Category"
   ) +
-  theme_minimal()   # Minimal theme for clean visuals
-
+  theme_minimal() # Minimal theme for clean visuals
 ```
 
 According to @fig-Crimes_by_Year, There was a sharp increase in crimes against property in 2023, reaching the highest number of incidents reported during the 2014-2023 period, with over 100,000 incidents. Crimes against the person maintained a relatively stable trend from 2014 to 2023, consistently reporting between 20,000 and 25,000 incidents annually. Traffic-related criminal code violations showed a decline from 2018, especially during 2020, where the number of reported incidents dropped below 15,000. Other categories, including "Controlled Drugs and Substances Act" and "Other Federal Statute Violations", remained consistently low over the years, each with less than 5,000 incidents reported annually.
@@ -227,9 +226,9 @@ crime_by_division_plot <- analysis_data %>%
 ## Create a bar chart comparing crime types and incidents by division
 ## Citation: https://allisonhorst.github.io/palmerpenguins/
 ## Citation: https://ggplot2.tidyverse.org
-crime_by_division_plot %>% 
+crime_by_division_plot %>%
   ggplot(aes(y = reorder(division_name, -total_incidents), x = total_incidents, fill = crime_subtype)) +
-  geom_bar(stat = "identity", position = "dodge") +  # Using a bar chart for comparison
+  geom_bar(stat = "identity", position = "dodge") + # Using a bar chart for comparison
   labs(
     title = "Crime Incidents by Division and Crime Type in Toronto",
     y = "Division",
@@ -240,10 +239,9 @@ crime_by_division_plot %>%
   theme(
     axis.text.y = element_text(size = 8, margin = margin(r = 10)), # Add the spacing of y-axis
     plot.title = element_text(hjust = 0.5), # Placing title on the middle
-    legend.position = "bottom"  # Placing legend on the bottom
+    legend.position = "bottom" # Placing legend on the bottom
   ) +
-  guides(fill = guide_legend(ncol = 2))  # Making the legend 2 columns
-
+  guides(fill = guide_legend(ncol = 2)) # Making the legend 2 columns
 ```
 Based on @fig-Crimes_by_Div, 32 Division reports high rates of auto theft than other divisions. 12 Division and 53 Division show large number reports in break-ins and residential thefts, especially in apartment.
 
@@ -258,10 +256,10 @@ Clearance rates, which reflect the number of resolved cases, vary widely between
 
 ## Calculate clearance rate for each crime type and division
 clearance_rate_plot <- analysis_data %>%
-  filter(incidents_reported > 0) %>%  # Ensure calculating clearance rate where incidents were reported
-  mutate(clearance_rate = incidents_cleared / incidents_reported) %>%  # Calculate the clearance rate
+  filter(incidents_reported > 0) %>% # Ensure calculating clearance rate where incidents were reported
+  mutate(clearance_rate = incidents_cleared / incidents_reported) %>% # Calculate the clearance rate
   group_by(crime_subtype, division_name) %>%
-  summarise(avg_clearance_rate = mean(clearance_rate, na.rm = TRUE))  # Average clearance rate for each crime type and division
+  summarise(avg_clearance_rate = mean(clearance_rate, na.rm = TRUE)) # Average clearance rate for each crime type and division
 ```
 
 ```{r}
@@ -279,23 +277,21 @@ clearance_rate_plot <- analysis_data %>%
 ## Citation: https://ggplot2.tidyverse.org
 clearance_rate_plot %>%
   ggplot(aes(y = reorder(division_name, -avg_clearance_rate), x = avg_clearance_rate, fill = crime_subtype)) +
-  geom_bar(stat = "identity", position = "dodge", width = 0.7) +  # Grouped bar chart for clearance rates
+  geom_bar(stat = "identity", position = "dodge", width = 0.7) + # Grouped bar chart for clearance rates
   labs(
     title = "Clearance Rate by Crime Type and Division in Toronto",
     y = "Division",
     x = "Average Clearance Rate",
     fill = "Crime Type"
   ) +
-  scale_x_continuous(labels = scales::percent_format(accuracy = 1)) +  # Convert y-axis to percentage
-  theme_minimal() +  # Minimal theme for clean visuals
+  scale_x_continuous(labels = scales::percent_format(accuracy = 1)) + # Convert y-axis to percentage
+  theme_minimal() + # Minimal theme for clean visuals
   theme(
     axis.text.y = element_text(size = 12, margin = margin(r = 10)), # Add the spacing of y-axis
     plot.title = element_text(hjust = 0.5), # Placing title on the middle
-    legend.position = "bottom"  # Placing legend on the bottom
+    legend.position = "bottom" # Placing legend on the bottom
   ) +
-  guides(fill = guide_legend(ncol = 2))  # Making the legend 2 columns
-
-
+  guides(fill = guide_legend(ncol = 2)) # Making the legend 2 columns
 ```
 As illustrated by @fig-Clearance_Rate, the overall clearance rate for property crimes remains low, with less than 10% of auto theft cases being resolved in most divisions. Crimes against persons, such as assault and sexual violations, generally have relatively high clearance rates, particularly in suburban areas.
 

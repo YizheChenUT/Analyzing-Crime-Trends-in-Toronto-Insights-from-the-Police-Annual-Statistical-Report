@@ -4,7 +4,7 @@
 # Date: 24 SEP 2024
 # Contact: yz.chen@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: Run 00-simulate_data.R 
+# Pre-requisites: Run 00-simulate_data.R
 # Any other information needed? No
 
 

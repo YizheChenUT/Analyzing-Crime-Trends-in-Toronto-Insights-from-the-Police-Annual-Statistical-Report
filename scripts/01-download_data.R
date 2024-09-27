@@ -17,11 +17,10 @@ package <- show_package("police-annual-statistical-report-reported-crimes") # ge
 
 resources <- list_package_resources("police-annual-statistical-report-reported-crimes") # get all resources for this package
 
-datastore_resources <- filter(resources, tolower(format) %in% c('csv', 'geojson')) # identify datastore resources
+datastore_resources <- filter(resources, tolower(format) %in% c("csv", "geojson")) # identify datastore resources
 
-data <- filter(datastore_resources, row_number()==1) %>% get_resource() # load the first datastore resource as a sample
+data <- filter(datastore_resources, row_number() == 1) %>% get_resource() # load the first datastore resource as a sample
 
 
 #### Save data ####
 write_csv(data, "data/raw_data/raw_data.csv")
-

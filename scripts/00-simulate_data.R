@@ -12,7 +12,7 @@
 library(tidyverse)
 
 #### Simulate data ####
-set.seed(304) #Setting seed to ensure reproducibility
+set.seed(304) # Setting seed to ensure reproducibility
 
 ## Simulate crime data sets
 simulate_crime_data <- function(n = 1000) {
@@ -26,6 +26,5 @@ simulate_crime_data <- function(n = 1000) {
 
 simulated_crime_data <- simulate_crime_data()
 
-##Save crime data
+## Save crime data
 write.csv(simulated_crime_data, "data/raw_data/simulated_reported_crimes.csv", row.names = FALSE)
-
