@@ -20,8 +20,3 @@ The repo is structured as:
 
 Aspects of the code were written with the help of ChatGPT. The abstract and introduction were written with the help of ChatGPT and the entire chat history is available in `other/llm/usage.txt`.
 
-## Some checks
-
-
-- [ ] Remove files that you're not using
-- [ ] Remove this checklist
