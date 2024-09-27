@@ -20,3 +20,9 @@ The repo is structured as:
 
 Aspects of the code were written with the help of ChatGPT. The abstract and introduction were written with the help of ChatGPT and the entire chat history is available in `other/llm/usage.txt`.
 
+## How to Run
+1. Run `scripts/01-download_data.R` to download raw data
+2. Run `scripts/02-data_cleaning.R` to get cleaned data
+3. Run  `paper/paper.qmd` to generate the PDF of the paper
+4. Run `scripts/00-simulate_data.R` to simulate data
+5. Run `scripts/03-test_data.R` to test simulated data
