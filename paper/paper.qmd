@@ -28,7 +28,9 @@ Crime and public safety are critical concerns for urban environments like Toront
 
 Our analysis covers from 2014 to 2023 and focuses on two main crime categories: Crimes Against Property and Crimes Against the Person. We explore how incidents vary by division and examine clearance rates (resolved cases) to evaluate the effectiveness of law enforcement strategies. By highlighting regional crime trends, this paper provides insights into public safety concerns that can shape future policies.
 
-# Data
+The remainder of this paper is structured as follows: @sec-data presents the data and the steps taken to clean and transform it for analysis. @sec-result discusses the results of the study, focusing on crime distribution trends by year, types of crimes by division, and clearance rates for different crime types. @sec-discussion interprets the findings in the broader context of urban crime trends and offers insights for future research. Finally, @sec-conclusion concludes the paper by summarizing key takeaways and recommending strategies for crime prevention and law enforcement improvement in Toronto.
+
+# Data {#sec-data}
 The data used in this analysis was obtained from the Open Data Toronto portal [@OpenDataDataset]. The data set includes reported incidents categorized by type, division, and year, covering the period from 2014 to 2023. 
 
 ## Reported Crimes Dataset
@@ -42,7 +44,7 @@ The dataset includes multiple fields related to crime, such as:
 ## Data Cleaning and Transformation
 The data was cleaned by removing duplicates and correcting data entry errors[@citeR] [@tidyverse] [@janitor]. Special attention was given to divisions with high and low crime rates, as well as to the clearance rate, which reflects how effectively crimes were resolved by the law enforcement.
 
-# Results
+# Results {#sec-result}
 ## Crime Distribution by Year
 The dataset reveals fluctuating crime rates between 2014 and 2023. Property crimes such as auto theft have shown consistent increases, while personal crimes, such as sexual violations, remain relatively stable.
 
@@ -167,14 +169,14 @@ clearance_rate_plot %>%
 ```
 As illustrated by @fig-Clearance_Rate, the overall clearance rate for property crimes remains low, with less than 10% of auto theft cases being resolved in most divisions. Crimes against persons, such as assault and sexual violations, generally have relatively high clearance rates, particularly in suburban areas.
 
-# Discussion
+# Discussion {#sec-discussion}
 The results of this analysis show clear trends in crime patterns across Toronto. Downtown areas  are significantly affected by property crimes like auto theft and break-ins, driven by dense population and high economic activity. Suburban areas, however, report more violent crimes, which may be influenced by socio-economic factors such as income inequality and access to social services [@Mohammadi_Bergquist].
 
 The data also highlights the gap between reported incidents and the number of cleared cases. Low clearance rates for property crimes, particularly auto theft, suggest the need for more effective crime prevention measures. Increasing surveillance and expanding the capacity of law enforcement agencies in high-crime areas may help address this issue.
 
 Further research into socio-economic factors driving these trends is necessary. For example, regions with higher rates of poverty and unemployment may experience more violent crimes. Additionally, strategies like community policing and public engagement in high-risk areas may prove effective in reducing crime rates and improving clearance rates.
 
-# Conclusion
+# Conclusion {#sec-conclusion}
 This paper analyzed crime trends in Toronto using the Police Annual Statistical Report from 2014 to 2023. The findings demonstrate significant varieties in crime distribution across Toronto’s police divisions, with property crimes being more concentrated in downtown areas and violent crimes more prevalent in suburban regions. These insights are critical for shaping future crime prevention policies and ensuring the effective allocation of related resources.
 
 Further research should explore the socio-economic factors influencing these trends, including whether community engagement can help lower crime rates in high-risk areas.
