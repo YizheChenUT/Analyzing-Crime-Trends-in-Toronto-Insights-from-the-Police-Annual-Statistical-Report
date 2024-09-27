@@ -20,6 +20,7 @@ bibliography: references.bib
 
 library(tidyverse)
 library(palmerpenguins)
+library(gt)
 ```
 
 
@@ -31,7 +32,7 @@ Our analysis covers from 2014 to 2023 and focuses on two main crime categories: 
 The remainder of this paper is structured as follows: @sec-data presents the data and the steps taken to clean and transform it for analysis. @sec-result discusses the results of the study, focusing on crime distribution trends by year, types of crimes by division, and clearance rates for different crime types. @sec-discussion interprets the findings in the broader context of urban crime trends and offers insights for future research. Finally, @sec-conclusion concludes the paper by summarizing key takeaways and recommending strategies for crime prevention and law enforcement improvement in Toronto.
 
 # Data {#sec-data}
-The data used in this analysis was obtained from the Open Data Toronto portal [@OpenDataDataset]. The data set includes reported incidents categorized by type, division, and year, covering the period from 2014 to 2023. 
+The data used in this analysis was obtained from the Open Data Toronto portal [@OpenDataDataset]. The data set includes reported incidents categorized by type, division, and year across Toronto, covering the period from 2014 to 2023. The data collection is a key resource for tracking public safety, and its availability promotes transparency in policing efforts. However, the dataset also raises ethical concerns, particularly around data privacy. Although anonymized, the geospatial breakdown could still enable the identification of patterns in specific communities, potentially stigmatizing certain areas.
 
 ## Reported Crimes Dataset
 The dataset includes multiple fields related to crime, such as:  
@@ -42,7 +43,115 @@ The dataset includes multiple fields related to crime, such as:
 **Incidents Cleared**: The number of resolved cases.
 
 ## Data Cleaning and Transformation
-The data was cleaned by removing duplicates and correcting data entry errors[@citeR] [@tidyverse] [@janitor]. Special attention was given to divisions with high and low crime rates, as well as to the clearance rate, which reflects how effectively crimes were resolved by the law enforcement.
+To prepare the dataset for analysis, I performed a thorough cleaning process using the janitor package [@janitor], which removed duplicates and corrected entry errors. Given the size and complexity of the dataset, we also used dplyr [@tidyverse] to filter, arrange, and group data based on specific crime subtypes and divisions. @fig-Crimes_by_Division illustrates the breakdown of crimes across different divisions from 2014 to 2023.
+
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+
+crime_data <- read_csv(here::here("data/analysis_data/analysis_data.csv")) # Load the cleaned analysis data
+
+## Filter and organize data for the plot
+crime_by_division <- crime_data %>%
+  group_by(division_name, year) %>%
+  summarize(total_crimes = sum(incidents_reported, na.rm = TRUE))
+```
+
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-Crimes_by_Division
+#| fig-cap: Total Crimes across Different Divisions
+
+## Plot crime trends by division
+crime_by_division %>% 
+  ggplot(aes(x = year, y = total_crimes, color = division_name)) +
+  geom_line(size = 1) +
+  labs(
+    title = "Crime Incidents by Division (2014-2023)",
+    x = "Year",
+    y = "Total Incidents",
+    color = "Division"
+  ) +
+  theme_minimal()# Minimal theme for clean visuals
+```
+
+## Broader Context and Ethical Considerations
+The crime data used in this report exists within a broader societal context, involving both ethical and statistical issues. Ethically, the publication of crime statistics is a double-edged sword. While transparency in crime reporting helps the public and policymakers make informed decisions, there are concerns that reporting on crime rates by division may reinforce stereotypes or unjustly stigmatize certain neighborhoods.
+
+From a statistical view, ensuring the accuracy of reported crimes is vital for maintaining public trust. Misreporting or underreporting of crimes, either by victims or authorities, can skew the perception of public safety and crime trends. The dataset itself does not account for unreported crimes, which is a limitation that should be considered when interpreting the results. Further, as crime rates fluctuate over time, the consistency of data collection methodologies is essential for making accurate year-over-year comparisons.
+
+## Graphical Representation and Tables
+To have a better understanding of crime trends, @fig-Crimes_by_Division and @fig-Total_Crimes_by_year below present detailed graphical representations of the actual data, generated using ggplot2 [@ggplot2]. The graphs highlight crime distributions across divisions and time periods, avoiding the use of summary statistics to give a more detailed view of crime trends. @tbl-Total_Crimes_by_year_div, created using the gt package (@gt), provides a tabular summary of crime data by year and division.
+
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+
+## Group data by year for total crime counts
+crime_by_year <- crime_data %>%
+  group_by(year) %>%
+  summarize(total_crimes = sum(incidents_reported, na.rm = TRUE))
+```
+
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-Total_Crimes_by_year
+#| fig-cap: Total Crimes by Year
+
+## Plot crime trends by year
+crime_by_year %>% 
+ggplot(aes(x = year, y = total_crimes)) +
+  geom_line(size = 1, color = "blue") +
+  labs(
+    title = "Crimes Reported by Year (2014-2023)",
+    x = "Year",
+    y = "Total Crimes Reported"
+  ) +
+  theme_minimal() # Minimal theme for clean visuals
+```
+
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+
+## Prepare data for table
+crime_summary_table <- crime_data %>%
+  group_by(year, division_name) %>%
+  summarize(total_crimes = sum(incidents_reported, na.rm = TRUE))
+```
+
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+#| label: tbl-Total_Crimes_by_year_div
+#| tbl-cap: Total Crimes by Year and Division
+
+## Create a table using gt
+crime_summary_table %>%
+  gt() %>%
+  tab_header(
+    title = "Crime Incidents by Year and Division (2014-2023)"
+  ) %>%
+  cols_label(
+    year = "Year",
+    division_name = "Police Division",
+    total_crimes = "Total Crimes Reported"
+  )
+```
 
 # Results {#sec-result}
 ## Crime Distribution by Year
